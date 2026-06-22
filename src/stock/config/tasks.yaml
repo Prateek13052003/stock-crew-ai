@@ -1,0 +1,149 @@
+find_trending_companies:
+  description: >
+    Search the web RIGHT NOW for the most important publicly traded companies
+    currently trending in the {sector} sector as of {current_date}.
+
+    You MUST use the search tool.
+
+    Do NOT use prior knowledge.
+
+    Focus on companies receiving significant attention because of:
+    - earnings reports
+    - guidance changes
+    - analyst upgrades or downgrades
+    - major product announcements
+    - mergers and acquisitions
+    - regulatory developments
+    - unusual stock price movements
+    - AI initiatives
+    - major partnerships
+
+    Only include companies supported by recent and verifiable news.
+
+  expected_output: >
+    Return 3-5 companies.
+
+    For each company provide:
+
+    - company name
+    - ticker
+    - reason for trending
+    - news headline
+    - source name
+    - source URL
+    - publication date
+
+    Publication dates should be as recent as possible.
+
+    Every company must contain at least one valid source.
+
+  agent: researcher
+
+
+research_trending_companies:
+  description: >
+    Research each identified company using current web information.
+
+    You MUST use the search tool.
+
+    Research must include both financial and business analysis.
+
+    Collect information regarding:
+
+    - latest earnings
+    - revenue growth
+    - profitability
+    - analyst sentiment
+    - market position
+    - competitive advantages
+    - future growth opportunities
+    - major risks
+    - recent developments
+
+    Every important claim must be supported by sources.
+
+    Do not make assumptions.
+
+  expected_output: >
+    For every company provide:
+
+    Company Name
+
+    Financial Analysis:
+    - Revenue performance
+    - Earnings performance
+    - Growth indicators
+
+    Market Position:
+    - Competitive strengths
+    - Industry standing
+
+    Future Outlook:
+    - Bullish factors
+    - Bearish factors
+
+    Risk Assessment:
+    - Key risks
+    - Risk severity
+
+    Investment Potential:
+    - Short explanation
+
+    Sources:
+    - Source Name
+    - Source URL
+    - Publication Date
+
+    Include at least 3 supporting sources per company whenever possible.
+
+  agent: analyst
+
+
+pick_best_company:
+  description: >
+    Compare all researched companies and determine which company currently
+    represents the strongest investment opportunity.
+
+    Base the decision ONLY on the research provided.
+
+    Compare:
+
+    - financial strength
+    - earnings quality
+    - growth prospects
+    - competitive position
+    - risk profile
+    - recent developments
+    - long-term outlook
+
+    Every conclusion must be evidence-based.
+
+    Do not make unsupported claims.
+
+  expected_output: >
+    Return:
+
+    - company_name
+    - ticker
+    - recommendation_reason
+    - confidence_score (1-10)
+    - risks
+    - sources
+
+    recommendation_reason must explain:
+
+    - Why this company was selected
+    - Why it is stronger than the alternatives
+    - Key catalysts
+    - Key risks
+
+    confidence_score must be justified by the research.
+
+    Every source must contain:
+    - source_name
+    - source_url
+    - publication_date
+
+    Include an educational-use disclaimer.
+
+  agent: reporting_analyst
