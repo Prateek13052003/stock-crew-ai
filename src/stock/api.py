@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 from datetime import datetime
+from fastapi.middleware.cors import CORSMiddleware
 import logging
 import os
 import traceback
@@ -38,7 +39,13 @@ app = FastAPI(
     version=APP_VERSION,
     description="AI-powered stock research and analysis using CrewAI + Groq + Serper"
 )
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # ============================================================
 # Request Models
 # ============================================================
