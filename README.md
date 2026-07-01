@@ -17,7 +17,8 @@
 
 # 🤖 Autonomous Stock Research AI
 
-DEMO LINK-:https://stock-crew-ai.onrender.com/docs#/
+LINK-: https://stock-crew-ai.vercel.app/
+
 
 ### *A multi-agent AI system that researches, analyzes, and recommends stocks — fully autonomously.*
 
