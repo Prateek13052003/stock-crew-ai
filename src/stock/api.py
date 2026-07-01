@@ -3,7 +3,11 @@ from pydantic import BaseModel, Field
 from datetime import datetime
 from fastapi.middleware.cors import CORSMiddleware
 import logging
+from typing import Any
 import os
+from fastapi.responses import FileResponse
+from pathlib import Path
+import json
 import traceback
 import time
 
@@ -67,7 +71,7 @@ class AnalyzeResponse(BaseModel):
     sector: str
     generated_at: str
     execution_time_seconds: float
-    analysis: str
+    analysis: Any
 
 class ErrorResponse(BaseModel):
     success: bool
@@ -128,7 +132,7 @@ def analyze(request: AnalyzeRequest):
             sector=request.sector,
             generated_at=datetime.utcnow().isoformat(),
             execution_time_seconds=execution_time,
-            analysis=result.raw
+            analysis=json.loads(result.raw) 
         )
 
     except Exception as e:
@@ -147,3 +151,35 @@ def analyze(request: AnalyzeRequest):
                 "message": str(e)
             }
         )
+
+
+@app.get("/download-pdf")
+def download_pdf():
+
+    output_dir = Path("output")
+
+    if not output_dir.exists():
+        raise HTTPException(
+            status_code=404,
+            detail="No reports generated yet."
+        )
+
+    pdf_files = sorted(
+        output_dir.glob("*.pdf"),
+        key=lambda f: f.stat().st_mtime,
+        reverse=True,
+    )
+
+    if not pdf_files:
+        raise HTTPException(
+            status_code=404,
+            detail="No PDF found."
+        )
+
+    latest_pdf = pdf_files[0]
+
+    return FileResponse(
+        latest_pdf,
+        media_type="application/pdf",
+        filename=latest_pdf.name,
+    )

@@ -4,6 +4,7 @@ from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool
 from pydantic import BaseModel, Field
 from typing import List
+from dotenv import load_dotenv
 
 try:
     from crewai.memory import LongTermMemory, ShortTermMemory, EntityMemory
@@ -102,7 +103,11 @@ class StockPicker():
     agents_config = 'config/agents.yaml'
     tasks_config = 'config/tasks.yaml'
 
-    llm = LLM(model="groq/llama-3.3-70b-versatile")
+    llm = LLM(
+    model="gemini/gemini-2.5-flash",
+    temperature=0,
+    max_tokens=400,
+)
 
 
     # ── Agents ──────────────────────────────────────────────────────────────
